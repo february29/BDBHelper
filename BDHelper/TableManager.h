@@ -31,7 +31,7 @@ typedef void(^creatBlock) ( FMDatabase *db);
  @param columnTypeArray 数据库中列的类型 （NSString 用 text代替，fmdb在识别string时可能出错）
  
  */
--(void)createTableWithName:(NSString *)tableName columnNameArray:(NSArray *)columuNameArray columnTypeArray:(NSArray*)columnTypeArray;
+-(void)createTableWithName:(NSString *)tableName columnNameArray:(NSArray *)columnNameArray columnTypeArray:(NSArray*)columnTypeArray;
 
 
 /** 创建表格，表格类与表格同名

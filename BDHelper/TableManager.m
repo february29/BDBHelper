@@ -44,10 +44,10 @@
 
 
  
--(void)createTableWithName:(NSString *)tableName columnNameArray:(NSArray *)columuNameArray columnTypeArray:(NSArray*)columnTypeArray{
+-(void)createTableWithName:(NSString *)tableName columnNameArray:(NSArray *)columnNameArray columnTypeArray:(NSArray*)columnTypeArray{
     
     if (![self.tableDictionary objectForKey:tableName]) {
-        BaseTableHelper *newTable = [self createTableClass:tableName columnNameArray:columuNameArray columnTypeArray:columnTypeArray];
+        BaseTableHelper *newTable = [self createTableClass:tableName columnNameArray:columnNameArray columnTypeArray:columnTypeArray];
         
         //在数据库中创建表格
         !newTable?:![self createtableInDBByTableHelper:newTable]?:[self.tableDictionary setObject:newTable forKey:tableName];
