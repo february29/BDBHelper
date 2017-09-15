@@ -7,11 +7,12 @@
 //
 
 #import "ViewController.h"
-#import "BaseTableHelper.h"
-#import "TableManager.h"
+#import "BBaseTableHelper.h"
+#import "BTableManager.h"
 #import "ApplistTable.h"
 #import "BlockCreateTable.h"
-
+#import "BModelHelper.h"
+#import "LuosProductModel.h"
 
 //使用说明
 //1.创建表格类继承BaseTableHelper（包含常用的几个方法）
@@ -19,7 +20,7 @@
 //3.用[TableManager sharedInstance]得到管理类，使用createTableWithName...创建表格。表格名与表格类必须同名。(建议在启动页创建)
 //4.需要的时候用[[TableManager sharedInstance]getTableByName:@"表格名"]得到表格实体类进行操作。
 @interface ViewController (){
-    BaseTableHelper *THelper;
+    BBaseTableHelper *THelper;
 }
 
 @end
@@ -37,9 +38,9 @@
     
     
     
-    [[TableManager sharedInstance] createTableWithName:@"ApplistTable" columnNameArray:NameArray columnTypeArray:NameTypeArray];
+    [[BTableManager sharedInstance] createTableWithName:@"ApplistTable" columnNameArray:NameArray columnTypeArray:NameTypeArray];
     
-    ApplistTable  *testtable = [[TableManager sharedInstance]getTableByName:@"ApplistTable"];
+    ApplistTable  *testtable = [[BTableManager sharedInstance]getTableByName:@"ApplistTable"];
     
     
     
@@ -52,7 +53,7 @@
                          @"COLOUM4",@"long",
                          
                          nil];
-    [[TableManager sharedInstance]createTableWithName:@"DICTABLE" columnNameAndTypeDictionary:DIC];
+//    [[BTableManager sharedInstance]createTableWithName:@"DICTABLE" columnNameAndTypeDictionary:DIC];
     
     
     
@@ -68,7 +69,7 @@
                           nil];
     
     //添加列
-    [[TableManager sharedInstance]addColumnInable:@"ApplistTable" columnName:@"version" columnType:@"long"];
+    [[BTableManager sharedInstance]addColumnInable:@"ApplistTable" columnName:@"version" columnType:@"long"];
     
     [testtable  tableColummeInfo];
     [testtable insertDataToDB:dic2];
@@ -85,20 +86,26 @@
     //    [[TableManager sharedInstance] createTableWithName:@"ViewController" columnNameArray:NameArray columnTypeArray:NameTypeArray];
     
     //自主创建  block返回表格名称方便manager管理
-    [[TableManager sharedInstance]createTable:@"BlockCreateTable" withCreateBlock:^(FMDatabase *db) {
+    [[BTableManager sharedInstance]createTable:@"BlockCreateTable" withCreateBlock:^(FMDatabase *db) {
         BOOL ISOK = [db executeUpdate:@"create table if not exists BlockCreateTable (id int primary key, content string);"];
         
     }];
     
-    BlockCreateTable *BlockCreateTable =  [[TableManager sharedInstance]getTableByName:@"BlockCreateTable"];
+    
+//    [BModelHelper  getProperties:[LuosProductModel class]];
+    NSArray *arry = [BModelHelper getSqlitePropertyNameAndType:[LuosProductModel class]];
+    
+    NSArray *arry2 = [BModelHelper getPropertyNameAndType:[LuosProductModel class]];
+    
+//    BlockCreateTable *BlockCreateTable =  [[TableManager sharedInstance]getTableByName:@"BlockCreateTable"];
     //    NSDictionary *BlockCreateTableDic = [[NSDictionary alloc]initWithObjectsAndKeys:
     //    @(234),@"id",
     //    @"hellow customblocktable",@"content",nil];
     //
     //    [BlockCreateTable insertToDB:BlockCreateTableDic];
     
-    NSLog(@"%@",[BlockCreateTable getAllDateFromDB]);
-    [[TableManager sharedInstance]deleTableByName:@"BlockCreateTable"];
+//    NSLog(@"%@",[BlockCreateTable getAllDateFromDB]);
+    [[BTableManager sharedInstance]deleTableByName:@"BlockCreateTable"];
 }
 
 - (void)didReceiveMemoryWarning {

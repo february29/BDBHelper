@@ -10,7 +10,7 @@
 #import "FMDB.h"
 
 
-@interface BaseDBHelper : NSObject
+@interface BBaseDBHelper : NSObject
 
 @property(nonatomic ,retain,readwrite) FMDatabase *db;//默认在doc文件夹下 名字DB_defulut.db
 @property(nonatomic ,retain,readwrite) NSString *dbName;
@@ -19,5 +19,5 @@
 
 
 
--(BaseDBHelper *)initDBWithDBPath:(NSString *)dbPath dbName:(NSString *)dbName;
+-(BBaseDBHelper *)initDBWithDBPath:(NSString *)dbPath dbName:(NSString *)dbName;
 @end

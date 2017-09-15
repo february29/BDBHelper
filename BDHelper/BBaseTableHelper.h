@@ -11,13 +11,13 @@
 //用户如果想自己扩展至需要建立新的类继承该类  类名必须与表格名字一致.只需要写要扩展的方法即可
 //通过TableManager类 进行创建表格。 通过TableManager类获得表格，只需声明为自定义子类即可调用扩展方法。
 
-#import "BaseDBHelper.h"
+#import "BBaseDBHelper.h"
 #import "FMDatabase.h"
 typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
 
-@interface BaseTableHelper :NSObject
+@interface BBaseTableHelper :NSObject
 @property(nonatomic ,retain,readwrite) NSMutableArray *NameTypeArray ;//用于存放表格字段数据类型
-@property(nonatomic ,retain,readwrite) NSMutableArray *NameArray ;//用于存放表格字段名字 第一个为主键
+@property(nonatomic ,retain,readwrite) NSMutableArray *NameArray ;//用于存放表格字段名字 默认第一个为主键
 @property(nonatomic ,retain,readwrite) NSString *TableName;
 @property(nonatomic ,retain,readwrite) FMDatabase *db;
 
@@ -47,7 +47,7 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
 /**
  *  获取表格所有信息
  *
- *  @return
+ *  @return 表格信息
  */
 -(NSMutableArray *)getAllDateFromDB;
 
@@ -83,7 +83,7 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
 /**
  *  插入array
  *
- *  @param dataArray
+ *  @param dataArray 插入的array
  */
 -(void)insertDataArrayToDB:(NSArray*)dataArray;
 
@@ -103,12 +103,16 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
  */
 -(void)insertDataArrayToDBAsy:(NSArray*)dataArray completeBlock:(FMDBProcessCompleteBlock)complete;
 
+
+
 /**
- *  根据id删除某条数据(如果表格中没有id列不要用这个方法)
- *
- *  @param ID 
+ 通过主键删除某条数据
+
+ @param name 主键名称
+ @param value 主键值
+ @return 是否成功
  */
--(void)deletByID:(NSString *)ID;
+-(BOOL )deleteDataByPrimeryKeyName:(NSString *)name value:(int)value;
 
 /**
  *  输出表格中有哪些列（数据库中查询）

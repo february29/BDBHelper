@@ -6,16 +6,16 @@
 //  Copyright © 2015年 bai.xianzhi. All rights reserved.
 //
 
-#import "BaseDBHelper.h"
+#import "BBaseDBHelper.h"
 
-@interface BaseDBHelper()
+@interface BBaseDBHelper()
 
 
 
 @end
 
 
-@implementation BaseDBHelper
+@implementation BBaseDBHelper
 
 -(instancetype)init{
 //    self = [super init];
@@ -26,7 +26,7 @@
     return [self initDBWithDBPath:nil dbName:nil];
 }
 
--(BaseDBHelper *)initDBWithDBPath:(NSString *)dbPath dbName:(NSString *)dbName{
+-(BBaseDBHelper *)initDBWithDBPath:(NSString *)dbPath dbName:(NSString *)dbName{
     self = [super init];
     if (self) {
         _dbPath = dbPath;

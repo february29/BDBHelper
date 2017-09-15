@@ -6,7 +6,7 @@
 //  Copyright © 2015年 bai.xianzhi. All rights reserved.
 //
 
-#import "BaseTableHelper.h"
+#import "BBaseTableHelper.h"
 
 
 
@@ -19,11 +19,11 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
     return bai_fmdb_operation_processing_queue;
 }
 
-@interface BaseTableHelper()
+@interface BBaseTableHelper()
 
 @end
 
-@implementation BaseTableHelper
+@implementation BBaseTableHelper
 
 
 
@@ -117,7 +117,8 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
 //NSDictionary 中的字段名字与数据库中的字段名字严格一致
 -(void)insertDataToDB:(NSDictionary*)dic{
    
-    [self insertDataToDBWithNoOpenOpertate:dic isDataPart:NO];
+    [self insertDataToDB:dic isDataPart:NO];
+
 }
 
 
@@ -224,25 +225,28 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
 }
 
 
--(void)deletByID:(NSString *)ID{
+
+
+-(BOOL )deleteDataByPrimeryKeyName:(NSString *)name value:(int)value{
     if ([self.db open]) {
         
         NSString *deleteSql = [NSString stringWithFormat:
-                               @"delete from %@ where id=%@" ,
-                               _TableName,ID];
+                               @"delete from %@ where name=%d" ,
+                               _TableName,value];
         BOOL res = [self.db executeUpdate:deleteSql];
         
         if (!res) {
-            NSLog(@"error when delete db table:%@ id:%@",_TableName,ID);
+            NSLog(@"error when delete db table:%@ :%d",_TableName, value);
         } else {
-            NSLog(@"success to delete db table:%@ id:%@",_TableName,ID);
+            NSLog(@"success to delete db table:%@ :%d",_TableName,value);
         }
         [self.db close];
-        
+         return res;
     }else{
         NSLog(@"DB oppen error");
+        return false;
     }
-    
+
 }
 
 -(void)tableColummeInfo{

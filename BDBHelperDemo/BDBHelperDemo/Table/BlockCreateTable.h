@@ -6,8 +6,8 @@
 //  Copyright © 2015年 bai.xianzhi. All rights reserved.
 //
 
-#import "BaseTableHelper.h"
+#import "BBaseTableHelper.h"
 
-@interface BlockCreateTable : BaseTableHelper
+@interface BlockCreateTable : BBaseTableHelper
 
 @end

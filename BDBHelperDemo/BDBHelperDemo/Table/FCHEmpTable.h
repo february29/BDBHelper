@@ -6,9 +6,9 @@
 //  Copyright © 2016年 bai.xianzhi. All rights reserved.
 //
 
-#import "BaseTableHelper.h"
+#import "BBaseTableHelper.h"
 
-@interface FCHEmpTable : BaseTableHelper
+@interface FCHEmpTable : BBaseTableHelper
 /**
  *  根据部门ID获得同事列表
  *

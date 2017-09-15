@@ -13,7 +13,7 @@
  */
 @interface LuosProductModel : NSObject
 
-@property(nonatomic)int productId ;
+@property(nonatomic)NSInteger productId ;
 
 @property(nonatomic,strong)NSString *unit;
 
@@ -37,11 +37,13 @@
 
 @property(nonatomic,copy)NSString *pic ;
 
-@property(nonatomic)int hidden ;
+@property(nonatomic)BOOL hidden ;
 
 @property(nonatomic,copy)NSString *name;
 
 @property(nonatomic,copy)NSString *place;
 
+
+-(void)add ;
 
 @end

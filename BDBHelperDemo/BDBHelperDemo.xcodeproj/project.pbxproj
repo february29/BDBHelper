@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210B54C11F6B6F6B005547B9 /* BModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 210B54C01F6B6F6B005547B9 /* BModelHelper.m */; };
 		211E03771F6A682A0055EF2A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E03761F6A682A0055EF2A /* main.m */; };
 		211E037A1F6A682A0055EF2A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E03791F6A682A0055EF2A /* AppDelegate.m */; };
 		211E037D1F6A682A0055EF2A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E037C1F6A682A0055EF2A /* ViewController.m */; };
 		211E03801F6A682A0055EF2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 211E037E1F6A682A0055EF2A /* Main.storyboard */; };
 		211E03821F6A682A0055EF2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 211E03811F6A682A0055EF2A /* Assets.xcassets */; };
 		211E03851F6A682A0055EF2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 211E03831F6A682A0055EF2A /* LaunchScreen.storyboard */; };
-		21E0F4A41F6A6A5B00494703 /* BaseDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F49F1F6A6A5B00494703 /* BaseDBHelper.m */; };
-		21E0F4A51F6A6A5B00494703 /* BaseTableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4A11F6A6A5B00494703 /* BaseTableHelper.m */; };
-		21E0F4A61F6A6A5B00494703 /* TableManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4A31F6A6A5B00494703 /* TableManager.m */; };
+		21E0F4A41F6A6A5B00494703 /* BBaseDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F49F1F6A6A5B00494703 /* BBaseDBHelper.m */; };
+		21E0F4A51F6A6A5B00494703 /* BBaseTableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4A11F6A6A5B00494703 /* BBaseTableHelper.m */; };
+		21E0F4A61F6A6A5B00494703 /* BTableManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4A31F6A6A5B00494703 /* BTableManager.m */; };
 		21E0F4B71F6A6C0E00494703 /* ApplistTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4B21F6A6C0E00494703 /* ApplistTable.m */; };
 		21E0F4B81F6A6C0E00494703 /* BlockCreateTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4B41F6A6C0E00494703 /* BlockCreateTable.m */; };
 		21E0F4B91F6A6C0E00494703 /* FCHEmpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 21E0F4B61F6A6C0E00494703 /* FCHEmpTable.m */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		210B54BF1F6B6F6B005547B9 /* BModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BModelHelper.h; sourceTree = "<group>"; };
+		210B54C01F6B6F6B005547B9 /* BModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BModelHelper.m; sourceTree = "<group>"; };
 		211E03721F6A682A0055EF2A /* BDBHelperDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDBHelperDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		211E03761F6A682A0055EF2A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		211E03781F6A682A0055EF2A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -34,12 +37,12 @@
 		211E03811F6A682A0055EF2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		211E03841F6A682A0055EF2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		211E03861F6A682A0055EF2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		21E0F49E1F6A6A5B00494703 /* BaseDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDBHelper.h; sourceTree = "<group>"; };
-		21E0F49F1F6A6A5B00494703 /* BaseDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDBHelper.m; sourceTree = "<group>"; };
-		21E0F4A01F6A6A5B00494703 /* BaseTableHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableHelper.h; sourceTree = "<group>"; };
-		21E0F4A11F6A6A5B00494703 /* BaseTableHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableHelper.m; sourceTree = "<group>"; };
-		21E0F4A21F6A6A5B00494703 /* TableManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableManager.h; sourceTree = "<group>"; };
-		21E0F4A31F6A6A5B00494703 /* TableManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableManager.m; sourceTree = "<group>"; };
+		21E0F49E1F6A6A5B00494703 /* BBaseDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBaseDBHelper.h; sourceTree = "<group>"; };
+		21E0F49F1F6A6A5B00494703 /* BBaseDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBaseDBHelper.m; sourceTree = "<group>"; };
+		21E0F4A01F6A6A5B00494703 /* BBaseTableHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBaseTableHelper.h; sourceTree = "<group>"; };
+		21E0F4A11F6A6A5B00494703 /* BBaseTableHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBaseTableHelper.m; sourceTree = "<group>"; };
+		21E0F4A21F6A6A5B00494703 /* BTableManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTableManager.h; sourceTree = "<group>"; };
+		21E0F4A31F6A6A5B00494703 /* BTableManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTableManager.m; sourceTree = "<group>"; };
 		21E0F4B11F6A6C0E00494703 /* ApplistTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplistTable.h; sourceTree = "<group>"; };
 		21E0F4B21F6A6C0E00494703 /* ApplistTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplistTable.m; sourceTree = "<group>"; };
 		21E0F4B31F6A6C0E00494703 /* BlockCreateTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockCreateTable.h; sourceTree = "<group>"; };
@@ -113,12 +116,14 @@
 		21E0F49D1F6A6A5B00494703 /* BDHelper */ = {
 			isa = PBXGroup;
 			children = (
-				21E0F49E1F6A6A5B00494703 /* BaseDBHelper.h */,
-				21E0F49F1F6A6A5B00494703 /* BaseDBHelper.m */,
-				21E0F4A01F6A6A5B00494703 /* BaseTableHelper.h */,
-				21E0F4A11F6A6A5B00494703 /* BaseTableHelper.m */,
-				21E0F4A21F6A6A5B00494703 /* TableManager.h */,
-				21E0F4A31F6A6A5B00494703 /* TableManager.m */,
+				21E0F49E1F6A6A5B00494703 /* BBaseDBHelper.h */,
+				21E0F49F1F6A6A5B00494703 /* BBaseDBHelper.m */,
+				21E0F4A01F6A6A5B00494703 /* BBaseTableHelper.h */,
+				21E0F4A11F6A6A5B00494703 /* BBaseTableHelper.m */,
+				21E0F4A21F6A6A5B00494703 /* BTableManager.h */,
+				21E0F4A31F6A6A5B00494703 /* BTableManager.m */,
+				210B54BF1F6B6F6B005547B9 /* BModelHelper.h */,
+				210B54C01F6B6F6B005547B9 /* BModelHelper.m */,
 			);
 			name = BDHelper;
 			path = ../../BDHelper;
@@ -285,14 +290,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21E0F4A61F6A6A5B00494703 /* TableManager.m in Sources */,
+				21E0F4A61F6A6A5B00494703 /* BTableManager.m in Sources */,
+				210B54C11F6B6F6B005547B9 /* BModelHelper.m in Sources */,
 				211E037D1F6A682A0055EF2A /* ViewController.m in Sources */,
 				21E0F4B91F6A6C0E00494703 /* FCHEmpTable.m in Sources */,
 				21E0F4B71F6A6C0E00494703 /* ApplistTable.m in Sources */,
-				21E0F4A51F6A6A5B00494703 /* BaseTableHelper.m in Sources */,
+				21E0F4A51F6A6A5B00494703 /* BBaseTableHelper.m in Sources */,
 				21E0F4B81F6A6C0E00494703 /* BlockCreateTable.m in Sources */,
 				211E037A1F6A682A0055EF2A /* AppDelegate.m in Sources */,
-				21E0F4A41F6A6A5B00494703 /* BaseDBHelper.m in Sources */,
+				21E0F4A41F6A6A5B00494703 /* BBaseDBHelper.m in Sources */,
 				21E0F4BD1F6A6D2B00494703 /* LuosProductModel.m in Sources */,
 				211E03771F6A682A0055EF2A /* main.m in Sources */,
 			);
