@@ -13,6 +13,7 @@
 #import "BlockCreateTable.h"
 #import "BModelHelper.h"
 #import "LuosProductModel.h"
+#import "ProductTable.h"
 
 //使用说明
 //1.创建表格类继承BaseTableHelper（包含常用的几个方法）
@@ -60,21 +61,47 @@
         BOOL ISOK = [db executeUpdate:@"create table if not exists BlockCreateTable (id int primary key, content string);"];
         
     }];
+    
+    //===================================获取表格=======================================//
 
-//    //获取表格
-//    ApplistTable  *testtable = [[BTableManager sharedInstance]getTableByName:@"ApplistTable"];
-//    
-//    
-//    
-//    
-//    //清空表格
-//    [testtable clearTable];
-//    
-//    //插入数据
-//    
-//    
-//    
-//    
+    //获取表格
+    ApplistTable  *testtable = [[BTableManager sharedInstance]getTableByName:@"ApplistTable"];
+    
+    ProductTable *productTable = [[BTableManager sharedInstance]getTableByName:@"ProductTable"];
+
+    
+    
+
+    //===================================清空表格=======================================//
+
+    [testtable clearTable];
+    [productTable clearTable];
+
+    //===================================插入数据=======================================//
+    LuosProductModel *product = [LuosProductModel new];
+    product.productId = 12;
+    product.name = @"hellow";
+    product.num = 11;
+    
+    
+    LuosProductModel *product2 = [LuosProductModel new];
+    product2.productId = 13;
+    product2.name = @"he42llow";
+    product2.num = 114;
+
+    
+    
+    [productTable insertDataArrayToDB:@[product,product2]];
+    
+    
+    
+    //===================================获取数据=======================================//
+    
+    NSArray *dicArray = [productTable getAllDateFromDB ];
+    NSDictionary *dic = [productTable getDataByPrimeryKeyName:@"productId" value:12 ];
+    NSArray *modelArray = [productTable getAllDateFromDBWithModleClass:[LuosProductModel class] ];
+    LuosProductModel *model = [productTable getDataByPrimeryKeyName:@"productId" value:12 modleClass:[LuosProductModel class]];
+//
 //    //插入
 //    NSDictionary *dic2 = [[NSDictionary alloc]initWithObjectsAndKeys:
 //                          @311,@"id",

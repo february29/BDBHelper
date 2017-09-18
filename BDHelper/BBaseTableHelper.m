@@ -7,6 +7,7 @@
 //
 
 #import "BBaseTableHelper.h"
+#import "BModelHelper.h"
 
 
 
@@ -69,15 +70,31 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
     return dic;
 }
 
+-(id)getDataByPrimeryKeyName:(NSString *)name value:(int)value modleClass:(Class )modelClass{
+    NSDictionary *dic = [self getDataByPrimeryKeyName:name value:value];
+    id model = [modelClass new];
+    
+    for (NSString *key in [dic allKeys]) {
+        [model setValue:dic[key] forKey:key];
+    }
+    return model;
+}
+
 //sql语句后面的 orderby 等为完善
 
 -(NSMutableArray *)getAllDateFromDB{
     
-    return [self getAllDateFromDBOrderBy:nil isDesc:YES];
+    return [self getAllDateFromDBOrderBy:nil isDesc:YES modleClass:nil];
    
+}
+-(NSMutableArray *)getAllDateFromDBWithModleClass:(Class )modelClass{
+    return [self getAllDateFromDBOrderBy:nil isDesc:YES modleClass:modelClass];
 }
 
 -(NSMutableArray *)getAllDateFromDBOrderBy:(NSString *)orderByName isDesc:(BOOL )isDesc{
+    return [self getAllDateFromDBOrderBy:orderByName isDesc:isDesc modleClass:nil];
+}
+-(NSMutableArray *)getAllDateFromDBOrderBy:(NSString *)orderByName isDesc:(BOOL )isDesc modleClass:(Class )modelClass{
    
     NSMutableArray *arrayFromDB = [[NSMutableArray alloc]init];
     if ([self.db open]) {
@@ -102,7 +119,21 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
             //
             //            }
             NSDictionary *dic =  [resultSet resultDictionary];
-            [arrayFromDB addObject:dic];
+            if (modelClass) {
+                id model = [modelClass new];
+                for (NSString *key in [dic allKeys]) {
+                    if (dic[key]&&![[NSNull null]isEqual:dic[key]]) {
+                        [model setValue:dic[key] forKey:key];
+                    }
+                    
+                }
+
+                [arrayFromDB addObject:model];
+            } else {
+                [arrayFromDB addObject:dic];
+            }
+            
+            
             
         };
         NSLog(@"%lu",(unsigned long)[arrayFromDB count]);
@@ -115,17 +146,17 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
 
 
 //NSDictionary 中的字段名字与数据库中的字段名字严格一致
--(void)insertDataToDB:(NSDictionary*)dic{
+-(void)insertDataToDB:(id)data{
    
-    [self insertDataToDB:dic isDataPart:NO];
+    [self insertDataToDB:data isDataPart:NO];
 
 }
 
 
--(void)insertDataToDB:(NSDictionary*)dic isDataPart:(BOOL)isDataPart{
+-(void)insertDataToDB:(id)data isDataPart:(BOOL)isDataPart{
     
     if ([self.db open]) {
-        [self insertDataToDBWithNoOpenOpertate:dic isDataPart:isDataPart];
+        [self insertDataToDBWithNoOpenOpertate:data isDataPart:isDataPart];
         [self.db close];
         
     }else{
@@ -180,12 +211,28 @@ static dispatch_queue_t fmdb_operation_processing_queue(){
 /**
  插入某条数据
 
- @param dic        插入的数据
+ @param data        插入的数据
  @param isDataPart 数据库存储改条数据的部分数据
  */
--(void)insertDataToDBWithNoOpenOpertate:(NSDictionary*)dic isDataPart:(BOOL)isDataPart{
+-(void)insertDataToDBWithNoOpenOpertate:(id)data isDataPart:(BOOL)isDataPart{
+    
+    NSMutableDictionary *dic ;
+    if ([data isKindOfClass:[NSDictionary class]]||[data isKindOfClass:[NSMutableDictionary class]]) {
+        dic = data;
+    }else{
+        NSArray *nameAndTypeArray = [BModelHelper getPropertyNameAndType:[data class]];
+        NSArray *nameArray = nameAndTypeArray[0];
+//        NSArray *typeArray = nameAndTypeArray[1];
+        dic = [NSMutableDictionary dictionary];
+        
+        [nameArray enumerateObjectsUsingBlock:^(NSString *name, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            dic[name] = [data valueForKey:name]?[data valueForKey:name]:[NSNull null];
+        }];
+    }
 
     NSMutableString *sqlStr = [NSMutableString stringWithFormat:@"replace into %@ (",_TableName];
+    
    
     NSArray *dicKeys = isDataPart?_NameArray:[dic allKeys];
     

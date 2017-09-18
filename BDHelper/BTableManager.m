@@ -256,25 +256,30 @@
 }
 
 -(void)addColumnInable:(NSString *)tableName columnName:(NSString *)columnName columnType:(NSString *)columnType{
-    if ([_dbHelper.db  open]) {
-        BBaseTableHelper *table = [self getTableByName:tableName];
-        
-        NSString *sql =  [NSString stringWithFormat:@"alter table %@ add %@ %@;",tableName,columnName,columnType];
-        if ([_dbHelper.db executeUpdate:sql]) {
+    BBaseTableHelper *table = [self getTableByName:tableName];
+    if (![table.NameArray containsObject:columnName]) {
+        if ([_dbHelper.db  open]) {
             
+            
+            NSString *sql =  [NSString stringWithFormat:@"alter table %@ add %@ %@;",tableName,columnName,columnType];
+            if ([_dbHelper.db executeUpdate:sql]) {
+                
+                [table.NameArray addObject:columnName];
+                [table.NameTypeArray addObject:columnType];
+                NSLog(@"数据库表格%@添加列 %@ 类型%@",tableName,columnName,columnType);
+                NSLog(@"%@ ",[[self getTableByName:tableName] NameArray]);
+                
+            }
+            
+            [_dbHelper.db close];
+            
+            //正常情况下应该更改manager内的表格类中的columnArray columnTypeArray 以防止此次程序生命周期内能够正常插入数据。
             [table.NameArray addObject:columnName];
             [table.NameTypeArray addObject:columnType];
-            NSLog(@"数据库表格%@添加列 %@ 类型%@",tableName,columnName,columnType);
-            NSLog(@"%@ ",[[self getTableByName:tableName] NameArray]);
-            
         }
-        
-        [_dbHelper.db close];
-        
-        //正常情况下应该更改manager内的表格类中的columnArray columnTypeArray 以防止此次程序生命周期内能够正常插入数据。
-        [table.NameArray addObject:columnName];
-        [table.NameTypeArray addObject:columnType];
+
     }
+   
 }
 // sqilite 不支持删除列 方法无效 
 -(void)dropColumnInTable:(NSString *)tableName columnName:(NSString *)columnName{

@@ -45,11 +45,23 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
 
 
 /**
+ 根据主键获取详情
+
+ @param name 主键名称
+ @param value 主键值
+ @param modelClass model类
+ @return model
+ */
+-(id)getDataByPrimeryKeyName:(NSString *)name value:(int)value modleClass:(Class )modelClass;
+
+/**
  *  获取表格所有信息
  *
  *  @return 表格信息
  */
 -(NSMutableArray *)getAllDateFromDB;
+
+-(NSMutableArray *)getAllDateFromDBWithModleClass:(Class )modelClass;
 
 
 /**
@@ -62,22 +74,28 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
  */
 -(NSMutableArray *)getAllDateFromDBOrderBy:(NSString *)orderByName isDesc:(BOOL )isDesc;
 
+-(NSMutableArray *)getAllDateFromDBOrderBy:(NSString *)orderByName isDesc:(BOOL )isDesc modleClass:(Class )modelClass;
+
 
 /**
  *  插入某条数据 
  *
- *  @param dic 数据
+ *  @param data 数据
  */
--(void)insertDataToDB:(NSDictionary*)dic;
+-(void)insertDataToDB:(id)data;
+
+
 
 
 /**
  插入某条数据
 
- @param dic        数据
+ @param data       数据
  @param isDataPart 数据库中字段包含该条数据所有字段？
  */
--(void)insertDataToDB:(NSDictionary*)dic isDataPart:(BOOL)isDataPart;
+-(void)insertDataToDB:(id)data isDataPart:(BOOL)isDataPart;
+
+
 
 
 /**
@@ -86,6 +104,10 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
  *  @param dataArray 插入的array
  */
 -(void)insertDataArrayToDB:(NSArray*)dataArray;
+
+
+
+
 
 /**
  插入array
