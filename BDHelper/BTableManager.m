@@ -64,6 +64,8 @@
         
         //在数据库中创建表格
         !newTable?:![self createtableInDBByTableHelper:newTable primaryKey:keyName]?:[self.tableDictionary setObject:newTable forKey:tableName];
+    }else{
+//        NSLog(@"表格%@已存在",tableName);
     }
     
     
@@ -199,14 +201,9 @@
     NSAssert(columnTypeArray.count == columuNameArray.count, @"表格字段数量与字段数据类型数量不一致!!!");
     
     BBaseTableHelper *newTable = [[NSClassFromString(tableName) alloc]init];
-    if(nil==newTable)  {
-        NSLog(@"创建表格%@失败，请首先创建同名的表格类，再进行数据库表格创建",tableName);
-        return nil;
-    }
-    if (![[newTable class]isSubclassOfClass:[BBaseTableHelper class]]) {
-        NSLog(@"创建表格%@失败，表格类应当继承BaseTableHelper",tableName);
-        return nil;
-    }
+    NSAssert(newTable!=nil,@"创建表格失败，请首先创建同名的表格类，再进行数据库表格创建");
+    NSAssert([[newTable class]isSubclassOfClass:[BBaseTableHelper class]],@"创建表格失败，表格类应当继承BBaseTableHelper");
+    
     newTable.db = _dbHelper.db;
     newTable.TableName = tableName;
     newTable.NameTypeArray = [[NSMutableArray alloc ]initWithArray: columnTypeArray];
@@ -229,22 +226,32 @@
 
 //自主创建表格。
 -(void)createTable:(NSString *)tableName withCreateBlock:(creatBlock) block;{
-    
-    if (block) {
-        @try {
-            [_dbHelper.db open];
-            block(_dbHelper.db);
-            [self addTableToManagerDictionary:tableName];
-           
+    NSAssert(block,@"请使用block中的db创建你的表格");
+    if (![self.tableDictionary objectForKey:tableName]) {
+        
+        if (block) {
+            @try {
+                [_dbHelper.db open];
+                block(_dbHelper.db);
+                [self addTableToManagerDictionary:tableName];
+                
+                
+            }
+            @catch (NSException *exception) {
+                NSLog(@"exception%@",exception);
+            }
+            @finally {
+                [_dbHelper.db close];
+            }
+        }else{
             
         }
-        @catch (NSException *exception) {
-            NSLog(@"exception%@",exception);
-        }
-        @finally {
-            [_dbHelper.db close];
-        }
+        
+
+    }else{
+//        NSLog(@"表格%@已存在",tableName);
     }
+    
     
 }
 

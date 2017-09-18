@@ -50,7 +50,7 @@ NSString *const BPropertyTypeUnsignedLongLong = @"Q";
 NSString *const BPropertyTypeFloat = @"f";
 NSString *const BPropertyTypeDouble = @"d";
 
-//NSString *const BPropertyTypeC99 = @"B";
+NSString *const BPropertyTypeC99 = @"B";
 NSString *const BPropertyTypeVoid = @"v";
 NSString *const BPropertyTypePointer = @"*";
 NSString *const BPropertyTypeId = @"@";
@@ -103,7 +103,7 @@ NSString *const BPropertyTypeBOOL2 = @"b";
         const char * typeEncoding0 = [code UTF8String];;
 //        NSString* typeEncoding = code;
 
-        NSArray *numberTypes = @[BPropertyTypeInt, BPropertyTypeShort,BPropertyTypeLong, BPropertyTypeLongLong, BPropertyTypeChar,BPropertyTypeUnsignedInt,BPropertyTypeUnsignedShort,BPropertyTypeUnsignedLong,BPropertyTypeUnsignedLongLong,BPropertyTypeuUnsignedChar,BPropertyTypeFloat, BPropertyTypeDouble, BPropertyTypeBOOL1, BPropertyTypeBOOL2];
+        NSArray *numberTypes = @[BPropertyTypeInt, BPropertyTypeShort,BPropertyTypeLong, BPropertyTypeLongLong, BPropertyTypeChar,BPropertyTypeUnsignedInt,BPropertyTypeUnsignedShort,BPropertyTypeUnsignedLong,BPropertyTypeUnsignedLongLong,BPropertyTypeuUnsignedChar,BPropertyTypeFloat, BPropertyTypeDouble, BPropertyTypeBOOL1, BPropertyTypeBOOL2,BPropertyTypeC99];
         NSString *type = @"unknow";
         
         if ([code isEqualToString:BPropertyTypeId]) {
@@ -135,7 +135,7 @@ NSString *const BPropertyTypeBOOL2 = @"b";
                 type = @"unsigned int";
             }
             else if (strcmp(typeEncoding0, @encode(long)) == 0) {
-                type = @"long";
+                type = @"long";  //typedef long NSInteger
             }
             else if (strcmp(typeEncoding0, @encode(unsigned long)) == 0) {
                 type = @"unsigned long";
@@ -155,14 +155,20 @@ NSString *const BPropertyTypeBOOL2 = @"b";
             else if (strcmp(typeEncoding0, @encode(BOOL)) == 0) {
                 type = @"BOOL";
             }
+            else if (strcmp(typeEncoding0, @encode(bool)) == 0) {
+                type = @"bool";
+            }
+
             else {
-                
+                type = @"unknown";
             }
         } else if (code.length > 3 && [code hasPrefix:@"@\""]) {
             //objctc 类型
             // 去掉@"和"，截取中间的类型名称
             type = [code substringWithRange:NSMakeRange(2, code.length - 3)];
             
+        }else{
+            type = @"unknown2";
         }
         [mNameArray addObject:key];//存储对象的变量名
         [mTypeArray addObject:type];
@@ -177,21 +183,43 @@ NSString *const BPropertyTypeBOOL2 = @"b";
     NSMutableArray *mNameArray = [NSMutableArray array];
     NSMutableArray *mTypeArray = [NSMutableArray array];
     unsigned int numIvars; //成员变量个数
-    Ivar *vars = class_copyIvarList(cls, &numIvars);
+    objc_property_t *properties = class_copyPropertyList(cls, &numIvars);
+    
     for(int i = 0; i < numIvars; i++) {
-        Ivar thisIvar = vars[i];
-        NSString* key = [NSString stringWithUTF8String:ivar_getName(thisIvar)];//获取成员变量的名
+        objc_property_t thisIvar = properties[i];
+        NSString* key = @(property_getName(thisIvar));//获取成员变量的名
         //获取成员变量的数据类型
-        const char * typeEncoding0 = ivar_getTypeEncoding(thisIvar);
-        NSString* typeEncoding = [NSString stringWithUTF8String:typeEncoding0];
         
-       
+        // 2.成员类型
+        NSString *attrs = @(property_getAttributes(thisIvar));
+        NSUInteger dotLoc = [attrs rangeOfString:@","].location;
+        NSString *code = nil;
+        NSUInteger loc = 1;
+        if (dotLoc == NSNotFound) { // 没有,
+            code = [attrs substringFromIndex:loc];
+        } else {
+            code = [attrs substringWithRange:NSMakeRange(loc, dotLoc - loc)];
+        }
+        
+        const char * typeEncoding0 = [code UTF8String];
+        //        NSString* typeEncoding = code;
+        
+        NSArray *numberTypes = @[BPropertyTypeInt, BPropertyTypeShort,BPropertyTypeLong, BPropertyTypeLongLong, BPropertyTypeChar,BPropertyTypeUnsignedInt,BPropertyTypeUnsignedShort,BPropertyTypeUnsignedLong,BPropertyTypeUnsignedLongLong,BPropertyTypeuUnsignedChar,BPropertyTypeFloat, BPropertyTypeDouble, BPropertyTypeBOOL1, BPropertyTypeBOOL2,BPropertyTypeC99];
         NSString *type = @"unknow";
         
-        if (typeEncoding.length > 3 && [typeEncoding hasPrefix:@"@\""]) {
+        
+        if (code.length > 3 && [code hasPrefix:@"@\""]) {
             //objctc 类型
             // 去掉@"和"，截取中间的类型名称
-            type = [typeEncoding substringWithRange:NSMakeRange(2, typeEncoding.length - 3)];
+            code = [code substringWithRange:NSMakeRange(2, code.length - 3)];
+            
+            
+            if ([code isEqualToString:@"NSString"]) {
+                type = @"text";
+            }else{
+                type = @"blob";
+            }
+            
             
         }else{
             if (strcmp(typeEncoding0, @encode(char)) == 0) {
@@ -233,15 +261,18 @@ NSString *const BPropertyTypeBOOL2 = @"b";
             else if (strcmp(typeEncoding0, @encode(BOOL)) == 0) {
                 type = @"int";
             }
+            else if (strcmp(typeEncoding0, @encode(bool)) == 0) {
+                type = @"int";
+            }
             else {
-                
+                type = @"blob";
             }
 
         }
         [mNameArray addObject:key];//存储对象的变量名
         [mTypeArray addObject:type];
     }
-    free(vars);//释放资源
+    free(properties);//释放资源
     
     return @[mNameArray,mTypeArray];
 

@@ -75,7 +75,7 @@ typedef  void(^FMDBProcessCompleteBlock) (FMDatabase *db );
  插入某条数据
 
  @param dic        数据
- @param isDataPart 数据库中字段包含改条数据所有字段？
+ @param isDataPart 数据库中字段包含该条数据所有字段？
  */
 -(void)insertDataToDB:(NSDictionary*)dic isDataPart:(BOOL)isDataPart;
 

@@ -28,84 +28,97 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    // Do any additional setup after loading the view, typically from a nib.
+    
     [super viewDidLoad];
+    
+    //===================================创建表格=======================================//
+    //方法一
     NSArray *NameArray = [[NSArray alloc]initWithObjects:
                           @"id",@"intkey",@"floatkey",@"doublekey",@"stringkey",@"longkey", nil];
-    
     NSArray  *NameTypeArray = [[NSArray alloc]initWithObjects:
                                @"int",@"int",@"float",@"double",@"string",@"long", nil];
-    
-    
-    
     [[BTableManager sharedInstance] createTableWithName:@"ApplistTable" columnNameArray:NameArray columnTypeArray:NameTypeArray];
     
-    ApplistTable  *testtable = [[BTableManager sharedInstance]getTableByName:@"ApplistTable"];
+    
+    //方法2
+    NSDictionary *DIC = @{
+                          @"COLOUM1":@"int",
+                          @"COLOUM2":@"double",
+                          @"COLOUM3":@"text",
+                          @"COLOUM4":@"long",
+
+                          };
+    [[BTableManager sharedInstance]createTableWithName:@"DICTABLE" columnNameAndTypeDictionary:DIC primeryKey:@"COLOUM2"];
     
     
+//    方法3
+    [[BTableManager sharedInstance]createTableWithName:@"ProductTable" modleClass:[LuosProductModel class] primeryKey:@"productId"];
     
     
-    [testtable clearTable];
-    NSDictionary *DIC = [[NSDictionary alloc]initWithObjectsAndKeys:
-                         @"COLOUM1",@"int",
-                         @"COLOUM2",@"double",
-                         @"COLOUM3",@"text",
-                         @"COLOUM4",@"long",
-                         
-                         nil];
-//    [[BTableManager sharedInstance]createTableWithName:@"DICTABLE" columnNameAndTypeDictionary:DIC];
-    
-    
-    
-    //插入
-    NSDictionary *dic2 = [[NSDictionary alloc]initWithObjectsAndKeys:
-                          @311,@"id",
-                          @1,@"intkey",
-                          @1.22,@"floatkey",
-                          @1.54323,@"doublekey",
-                          @"hellow worid",@"stringkey",
-                          @111222323,@"longkey",
-                          @1.0,@"version",
-                          nil];
-    
-    //添加列
-    [[BTableManager sharedInstance]addColumnInable:@"ApplistTable" columnName:@"version" columnType:@"long"];
-    
-    [testtable  tableColummeInfo];
-    [testtable insertDataToDB:dic2];
-    //[testtable getDateFromDB];
-    //基类方法调用
-    NSArray *array = [testtable getAllDateFromDB];
-    NSLog(@"%@",array);
-    //子类方法调用
-    // NSLog(@"%@",[testtable getDataBySQL:@""]);
-    
-    // 错误测试
-    //    [[TableManager sharedInstance]getTableByName:@"se"];
-    //    [[TableManager sharedInstance] createTableWithName:@"ApplistTable2" columnNameArray:NameArray columnTypeArray:NameTypeArray];
-    //    [[TableManager sharedInstance] createTableWithName:@"ViewController" columnNameArray:NameArray columnTypeArray:NameTypeArray];
-    
-    //自主创建  block返回表格名称方便manager管理
+    //方法4自主创建  block返回表格名称方便manager管理
     [[BTableManager sharedInstance]createTable:@"BlockCreateTable" withCreateBlock:^(FMDatabase *db) {
         BOOL ISOK = [db executeUpdate:@"create table if not exists BlockCreateTable (id int primary key, content string);"];
         
     }];
-    
-    
-//    [BModelHelper  getProperties:[LuosProductModel class]];
-    NSArray *arry = [BModelHelper getSqlitePropertyNameAndType:[LuosProductModel class]];
-    
-    NSArray *arry2 = [BModelHelper getPropertyNameAndType:[LuosProductModel class]];
-    
-//    BlockCreateTable *BlockCreateTable =  [[TableManager sharedInstance]getTableByName:@"BlockCreateTable"];
-    //    NSDictionary *BlockCreateTableDic = [[NSDictionary alloc]initWithObjectsAndKeys:
-    //    @(234),@"id",
-    //    @"hellow customblocktable",@"content",nil];
-    //
-    //    [BlockCreateTable insertToDB:BlockCreateTableDic];
-    
-//    NSLog(@"%@",[BlockCreateTable getAllDateFromDB]);
-    [[BTableManager sharedInstance]deleTableByName:@"BlockCreateTable"];
+
+//    //获取表格
+//    ApplistTable  *testtable = [[BTableManager sharedInstance]getTableByName:@"ApplistTable"];
+//    
+//    
+//    
+//    
+//    //清空表格
+//    [testtable clearTable];
+//    
+//    //插入数据
+//    
+//    
+//    
+//    
+//    //插入
+//    NSDictionary *dic2 = [[NSDictionary alloc]initWithObjectsAndKeys:
+//                          @311,@"id",
+//                          @1,@"intkey",
+//                          @1.22,@"floatkey",
+//                          @1.54323,@"doublekey",
+//                          @"hellow worid",@"stringkey",
+//                          @111222323,@"longkey",
+//                          @1.0,@"version",
+//                          nil];
+//    
+//    //添加列
+//    [[BTableManager sharedInstance]addColumnInable:@"ApplistTable" columnName:@"version" columnType:@"long"];
+//    
+//    [testtable  tableColummeInfo];
+//    [testtable insertDataToDB:dic2];
+//    //[testtable getDateFromDB];
+//    //基类方法调用
+//    NSArray *array = [testtable getAllDateFromDB];
+//    NSLog(@"%@",array);
+//    //子类方法调用
+//    // NSLog(@"%@",[testtable getDataBySQL:@""]);
+//    
+//    // 错误测试
+//    //    [[TableManager sharedInstance]getTableByName:@"se"];
+//    //    [[TableManager sharedInstance] createTableWithName:@"ApplistTable2" columnNameArray:NameArray columnTypeArray:NameTypeArray];
+//    //    [[TableManager sharedInstance] createTableWithName:@"ViewController" columnNameArray:NameArray columnTypeArray:NameTypeArray];
+//    
+//    
+//    
+////    [BModelHelper  getProperties:[LuosProductModel class]];
+//    NSArray *arry = [BModelHelper getSqlitePropertyNameAndType:[LuosProductModel class]];
+//    
+//    NSArray *arry2 = [BModelHelper getPropertyNameAndType:[LuosProductModel class]];
+//    
+////    BlockCreateTable *BlockCreateTable =  [[TableManager sharedInstance]getTableByName:@"BlockCreateTable"];
+//    //    NSDictionary *BlockCreateTableDic = [[NSDictionary alloc]initWithObjectsAndKeys:
+//    //    @(234),@"id",
+//    //    @"hellow customblocktable",@"content",nil];
+//    //
+//    //    [BlockCreateTable insertToDB:BlockCreateTableDic];
+//    
+////    NSLog(@"%@",[BlockCreateTable getAllDateFromDB]);
+//    [[BTableManager sharedInstance]deleTableByName:@"BlockCreateTable"];
 }
 
 - (void)didReceiveMemoryWarning {
