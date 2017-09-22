@@ -95,7 +95,7 @@
 		211E03741F6A682A0055EF2A /* BDBHelperDemo */ = {
 			isa = PBXGroup;
 			children = (
-				21E0F49D1F6A6A5B00494703 /* BDHelper */,
+				21E0F49D1F6A6A5B00494703 /* BDBHelper */,
 				21E0F4BA1F6A6C1600494703 /* Model */,
 				21E0F4B01F6A6C0E00494703 /* Table */,
 				211E03781F6A682A0055EF2A /* AppDelegate.h */,
@@ -119,7 +119,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		21E0F49D1F6A6A5B00494703 /* BDHelper */ = {
+		21E0F49D1F6A6A5B00494703 /* BDBHelper */ = {
 			isa = PBXGroup;
 			children = (
 				21E0F49E1F6A6A5B00494703 /* BBaseDBHelper.h */,
@@ -131,8 +131,8 @@
 				210B54BF1F6B6F6B005547B9 /* BModelHelper.h */,
 				210B54C01F6B6F6B005547B9 /* BModelHelper.m */,
 			);
-			name = BDHelper;
-			path = ../../BDHelper;
+			name = BDBHelper;
+			path = ../../BDBHelper;
 			sourceTree = "<group>";
 		};
 		21E0F4B01F6A6C0E00494703 /* Table */ = {

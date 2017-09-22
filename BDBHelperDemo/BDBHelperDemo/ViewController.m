@@ -33,7 +33,7 @@
     [super viewDidLoad];
     
     //===================================创建表格=======================================//
-    //方法一
+    //方法一 通过 列名 列类型创建
     NSArray *NameArray = [[NSArray alloc]initWithObjects:
                           @"id",@"intkey",@"floatkey",@"doublekey",@"stringkey",@"longkey", nil];
     NSArray  *NameTypeArray = [[NSArray alloc]initWithObjects:
@@ -41,7 +41,7 @@
     [[BTableManager sharedInstance] createTableWithName:@"ApplistTable" columnNameArray:NameArray columnTypeArray:NameTypeArray];
     
     
-    //方法2
+    //方法2 通过字典创建
     NSDictionary *DIC = @{
                           @"COLOUM1":@"int",
                           @"COLOUM2":@"double",
@@ -52,7 +52,7 @@
     [[BTableManager sharedInstance]createTableWithName:@"DICTABLE" columnNameAndTypeDictionary:DIC primeryKey:@"COLOUM2"];
     
     
-//    方法3
+//    方法3 通过model创建
     [[BTableManager sharedInstance]createTableWithName:@"ProductTable" modleClass:[LuosProductModel class] primeryKey:@"productId"];
     
     
@@ -71,6 +71,7 @@
 
     
     
+    
 
     //===================================清空表格=======================================//
 
@@ -78,18 +79,17 @@
     [productTable clearTable];
 
     //===================================插入数据=======================================//
+    // 支持 字典 model 单条多条插入
+    //model array插入
     LuosProductModel *product = [LuosProductModel new];
     product.productId = 12;
     product.name = @"hellow";
     product.num = 11;
     
-    
     LuosProductModel *product2 = [LuosProductModel new];
     product2.productId = 13;
     product2.name = @"he42llow";
     product2.num = 114;
-
-    
     
     [productTable insertDataArrayToDB:@[product,product2]];
     
